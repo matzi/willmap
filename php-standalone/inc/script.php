@@ -88,7 +88,7 @@ for($page=1;$page < $_GET["pages"] + 1 ; $page++) {
                 continue;
             }
             if(strlen($info['COORDINATES']) > 3 && $_GET["minsize"] <= $info['ESTATE_SIZE']) {
-                $sqm_price = number_format($info['PRICE'] / $info['ESTATE_SIZE'], 2);
+                $sqm_price = $info['PRICE'] / $info['ESTATE_SIZE'];
                 if ($price_per_sqm > 0 && $sqm_price > $price_per_sqm) {
                     continue;
                 }
@@ -98,7 +98,7 @@ for($page=1;$page < $_GET["pages"] + 1 ; $page++) {
                     .$info['ESTATE_SIZE']."m²<br>"
                     .$info['PRICE']."€<br>"
                     .date('Y-m-d H:i', intval($info['PUBLISHED']) / 1000)."<br>"
-                    .$sqm_price."€/m²<br>"
+                    .number_format($sqm_price, 2)."€/m²<br>"
                     ."<a href=\"".$prefix_willhaben . $info['SEO_URL']."\" target=\"_blank\">Link</a><br>"
                     ."<img src=\"".$prefix_mmo . $info['MMO']."\" height=\"200px\">'); \n";
                 $js .= 'markers.addLayer(tmp);';
