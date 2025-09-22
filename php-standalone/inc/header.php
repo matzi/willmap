@@ -64,6 +64,7 @@
         <option value="0" <?php if(isset($_GET['art']) && $_GET['art'] == "0") echo "selected"; ?>>mietwohnungen</option>
         <option value="1" <?php if(isset($_GET['art']) && $_GET['art'] == "1") echo "selected"; ?>>eigentumswohnungen</option>
         <option value="2" <?php if(isset($_GET['art']) && $_GET['art'] == "2") echo "selected"; ?>>haus-kaufen</option>
+        <option value="3" <?php if(isset($_GET['art']) && $_GET['art'] == "3") echo "selected"; ?>>haus-mieten</option>
       </select>
       <br />
       <label for="district">Bezirk:</label>
@@ -86,6 +87,20 @@
       <!--<br />
       <label for="rows">Zeilen pro Seite:</label>
       <input type="number" name="rows" id="rows" min="1" step="1" value="200">-->
+      <br />
+      <label for="use_date_filter">
+        <input type="checkbox" name="use_date_filter" id="use_date_filter" <?php if(isset($_GET['use_date_filter'])) echo "checked"; ?>>
+        Datum-Filter verwenden
+      </label>
+      <br />
+      <label for="posted_after">Veröffentlicht nach:</label>
+      <input type="date" name="posted_after" id="posted_after" value="<?php
+        if (isset($_GET['posted_after'])) {
+          echo htmlspecialchars($_GET['posted_after']);
+        } else {
+          echo date('Y-m-d', strtotime('-1 week'));
+        }
+      ?>">
       <br />
       <label for="sort">Sortierung:</label>
       <select name="sort" id="sort">

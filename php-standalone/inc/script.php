@@ -22,10 +22,13 @@ switch($_GET["art"]){
         $art = 'mietwohnungen';
         break;
     case "1":
-        $art = 'eigentumswohnungen';
+        $art = 'eigentumswohnung';
         break;
     case "2":
         $art = 'haus-kaufen';
+        break;
+    case "3":
+        $art = 'haus-mieten';
         break;
 }
 
@@ -53,6 +56,13 @@ $js = "var markers = L.markerClusterGroup();\n";
 
 $pattern = "/{\"props\":.*}/i";
 
+$use_date_filter = (isset($_GET["use_date_filter"]) && $_GET["use_date_filter"] === "on");
+$timestamp = 0;
+if($use_date_filter && isset($_GET["posted_after"]) && strlen($_GET["posted_after"]) == 10) {
+    $timestamp = strtotime($_GET["posted_after"]) * 1000;
+}
+
+
 $cnt=0;
 for($page=1;$page < $_GET["pages"] + 1 ; $page++) {
     # echo "Loading page $page\n";
@@ -69,7 +79,11 @@ for($page=1;$page < $_GET["pages"] + 1 ; $page++) {
                 $info[$entry->name] = addslashes($entry->values[0]);
             }
         }
-        try{
+        try {
+            # echo "console.log('Published: " . date('Y-m-d H:i', $info['PUBLISHED']) . ", Timestamp: " . $timestamp . "');\n";
+            if($use_date_filter && $timestamp > 0 && intval($info['PUBLISHED']) < $timestamp) {
+                continue;
+            }
             if(strlen($info['COORDINATES']) > 3 && $_GET["minsize"] <= $info['ESTATE_SIZE']){
             $js .= "var tmp = L.marker([".$info['COORDINATES']."]).addTo(map);\n";
             $js .= "tmp.bindPopup('<b>".$info['HEADING']."</b><br>"
