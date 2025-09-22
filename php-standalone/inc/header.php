@@ -99,8 +99,7 @@
       </select>
       <br />
       <input type="submit" value="Filtern">
-      </form>
-    </div>
+    </form>
   </div>
 </div>
 
