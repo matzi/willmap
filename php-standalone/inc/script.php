@@ -61,7 +61,10 @@ $timestamp = 0;
 if($use_date_filter && isset($_GET["posted_after"]) && strlen($_GET["posted_after"]) == 10) {
     $timestamp = strtotime($_GET["posted_after"]) * 1000;
 }
-
+$price_per_sqm = 0;
+if (isset($_GET["price_per_sqm"]) && is_numeric($_GET["price_per_sqm"])) {
+    $price_per_sqm = floatval($_GET["price_per_sqm"]);
+}
 
 $cnt=0;
 for($page=1;$page < $_GET["pages"] + 1 ; $page++) {
@@ -84,18 +87,22 @@ for($page=1;$page < $_GET["pages"] + 1 ; $page++) {
             if($use_date_filter && $timestamp > 0 && intval($info['PUBLISHED']) < $timestamp) {
                 continue;
             }
-            if(strlen($info['COORDINATES']) > 3 && $_GET["minsize"] <= $info['ESTATE_SIZE']){
-            $js .= "var tmp = L.marker([".$info['COORDINATES']."]).addTo(map);\n";
-            $js .= "tmp.bindPopup('<b>".$info['HEADING']."</b><br>"
-             .$info['POSTCODE']." ".$info['LOCATION'].", ".$info['ADDRESS']."<br>"
-        .$info['ESTATE_SIZE']."m²<br>"
-        .$info['PRICE']."€<br>"
-        .date('Y-m-d H:i', intval($info['PUBLISHED']) / 1000)."<br>"
-        .number_format($info['PRICE'] / $info['ESTATE_SIZE'], 2)."€/m²<br>"
-        ."<a href=\"".$prefix_willhaben . $info['SEO_URL']."\" target=\"_blank\">Link</a><br>"
-        ."<img src=\"".$prefix_mmo . $info['MMO']."\" height=\"200px\">'); \n";
-            $js .= 'markers.addLayer(tmp);';
-            $cnt += 1;
+            if(strlen($info['COORDINATES']) > 3 && $_GET["minsize"] <= $info['ESTATE_SIZE']) {
+                $sqm_price = number_format($info['PRICE'] / $info['ESTATE_SIZE'], 2);
+                if ($price_per_sqm > 0 && $sqm_price > $price_per_sqm) {
+                    continue;
+                }
+                $js .= "var tmp = L.marker([".$info['COORDINATES']."]).addTo(map);\n";
+                $js .= "tmp.bindPopup('<b>".$info['HEADING']."</b><br>"
+                    .$info['POSTCODE']." ".$info['LOCATION'].", ".$info['ADDRESS']."<br>"
+                    .$info['ESTATE_SIZE']."m²<br>"
+                    .$info['PRICE']."€<br>"
+                    .date('Y-m-d H:i', intval($info['PUBLISHED']) / 1000)."<br>"
+                    .$sqm_price."€/m²<br>"
+                    ."<a href=\"".$prefix_willhaben . $info['SEO_URL']."\" target=\"_blank\">Link</a><br>"
+                    ."<img src=\"".$prefix_mmo . $info['MMO']."\" height=\"200px\">'); \n";
+                $js .= 'markers.addLayer(tmp);';
+                $cnt += 1;
             }
         }
         catch(Exception $e) {

@@ -102,6 +102,9 @@
         }
       ?>">
       <br />
+      <label for="price_per_sqm">Max Preis pro m²:</label>
+      <input type="number" name="price_per_sqm" id="price_per_sqm" min="0" step="1" value="<?php echo isset($_GET['price_per_sqm']) ? htmlspecialchars($_GET['price_per_sqm']) : 0; ?>">
+      <br />
       <label for="sort">Sortierung:</label>
       <select name="sort" id="sort">
         <option value="0" <?php if(isset($_GET['sort']) && $_GET['sort'] == "0") echo "selected"; ?>>Aktualität</option>
