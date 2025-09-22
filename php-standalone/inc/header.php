@@ -26,8 +26,90 @@
       max-width: 100%;
       max-height: 100%;
     }
+    #filteroptions .expander {
+      width: 100%;
+      height: 40px;
+      position: absolute;
+      z-index: 10000;
+      background: black;
+      color: white;
+      text-align: center;
+      line-height: 40px;
+      cursor: pointer;
+      display: block;
+    }
+    #filteroptions .options {
+      width: 100%;
+      height: 400px;
+      position: absolute;
+      z-index: 10000;
+      display: block;
+      background: gray;
+    }
+    #filteroptions:not(.active) .options {
+      display: none;
+    }
+    #filteroptions.active .expander {
+      display: none;
+    }
   </style>
 <body>
+
+<div id="filteroptions">
+  <div class="expander">Filter einblenden</div>
+  <div class="options">
+    <form action="">
+        <label for="art">Immobilienart:</label>
+        <select name="art" id="art">
+          <option value="0">mietwohnungen</option>
+          <option value="1">eigentumswohnungen</option>
+          <option value="2">haus-kaufen</option>
+        </select>
+        <br />
+        <label for="district">Bezirk:</label>
+        <input type="text" name="district" id="district" value="steiermark/graz">
+        <br />
+        <label for="price_from">Preis von:</label>
+        <input type="number" name="price_from" id="price_from" min="0" step="1" value="400">
+        <br />
+        <label for="price_to">Preis bis:</label>
+        <input type="number" name="price_to" id="price_to" min="0" step="1" value="1200">
+        <br />
+        <label for="area_from">Fläche von (m²):</label>
+        <input type="number" name="area_from" id="area_from" min="0" step="1" value="65">
+        <br />
+        <label for="area_to">Fläche bis (m²):</label>
+        <input type="number" name="area_to" id="area_to" min="0" step="1" value="80">
+        <br />
+        <label for="pages">Seiten:</label>
+        <input type="number" name="pages" id="pages" min="1" step="1" value="5">
+        <!--<br />
+        <label for="rows">Zeilen pro Seite:</label>
+        <input type="number" name="rows" id="rows" min="1" step="1" value="200">-->
+        <br />
+        <label for="sort">Sortierung:</label>
+        <select name="sort" id="sort">
+          <option value="0">Aktualität</option>
+          <!--<option value="1">Nähe</option>-->
+          <option value="2">Miete aufsteigend</option>
+          <option value="3">Miete absteigend</option>
+          <option value="4">Fläche aufsteigend</option>
+          <option value="5">Fläche absteigend</option>
+          <option value="6">Relevanz</option>
+        </select>
+        <br />
+        <input type="submit" value="Filtern">
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelector('#filteroptions .expander').addEventListener('click', function() {
+  var wrapper = document.querySelector('#filteroptions');
+  wrapper.classList.add('active');
+});
+</script>
 
 <div id="map" style="width: 100%; height: 100%;"></div>
 <script>
