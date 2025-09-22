@@ -59,46 +59,46 @@
   <div class="expander">Filter einblenden</div>
   <div class="options">
     <form action="">
-        <label for="art">Immobilienart:</label>
-        <select name="art" id="art">
-          <option value="0">mietwohnungen</option>
-          <option value="1">eigentumswohnungen</option>
-          <option value="2">haus-kaufen</option>
-        </select>
-        <br />
-        <label for="district">Bezirk:</label>
-        <input type="text" name="district" id="district" value="steiermark/graz">
-        <br />
-        <label for="price_from">Preis von:</label>
-        <input type="number" name="price_from" id="price_from" min="0" step="1" value="400">
-        <br />
-        <label for="price_to">Preis bis:</label>
-        <input type="number" name="price_to" id="price_to" min="0" step="1" value="1200">
-        <br />
-        <label for="area_from">Fläche von (m²):</label>
-        <input type="number" name="area_from" id="area_from" min="0" step="1" value="65">
-        <br />
-        <label for="area_to">Fläche bis (m²):</label>
-        <input type="number" name="area_to" id="area_to" min="0" step="1" value="80">
-        <br />
-        <label for="pages">Seiten:</label>
-        <input type="number" name="pages" id="pages" min="1" step="1" value="5">
-        <!--<br />
-        <label for="rows">Zeilen pro Seite:</label>
-        <input type="number" name="rows" id="rows" min="1" step="1" value="200">-->
-        <br />
-        <label for="sort">Sortierung:</label>
-        <select name="sort" id="sort">
-          <option value="0">Aktualität</option>
-          <!--<option value="1">Nähe</option>-->
-          <option value="2">Miete aufsteigend</option>
-          <option value="3">Miete absteigend</option>
-          <option value="4">Fläche aufsteigend</option>
-          <option value="5">Fläche absteigend</option>
-          <option value="6">Relevanz</option>
-        </select>
-        <br />
-        <input type="submit" value="Filtern">
+      <label for="art">Immobilienart:</label>
+      <select name="art" id="art">
+        <option value="0" <?php if(isset($_GET['art']) && $_GET['art'] == "0") echo "selected"; ?>>mietwohnungen</option>
+        <option value="1" <?php if(isset($_GET['art']) && $_GET['art'] == "1") echo "selected"; ?>>eigentumswohnungen</option>
+        <option value="2" <?php if(isset($_GET['art']) && $_GET['art'] == "2") echo "selected"; ?>>haus-kaufen</option>
+      </select>
+      <br />
+      <label for="district">Bezirk:</label>
+      <input type="text" name="district" id="district" value="<?php echo isset($_GET['district']) ? htmlspecialchars($_GET['district']) : 'steiermark/graz'; ?>">
+      <br />
+      <label for="price_from">Preis von:</label>
+      <input type="number" name="price_from" id="price_from" min="0" step="1" value="<?php echo isset($_GET['price_from']) ? htmlspecialchars($_GET['price_from']) : '400'; ?>">
+      <br />
+      <label for="price_to">Preis bis:</label>
+      <input type="number" name="price_to" id="price_to" min="0" step="1" value="<?php echo isset($_GET['price_to']) ? htmlspecialchars($_GET['price_to']) : '1200'; ?>">
+      <br />
+      <label for="area_from">Fläche von (m²):</label>
+      <input type="number" name="area_from" id="area_from" min="0" step="1" value="<?php echo isset($_GET['area_from']) ? htmlspecialchars($_GET['area_from']) : '65'; ?>">
+      <br />
+      <label for="area_to">Fläche bis (m²):</label>
+      <input type="number" name="area_to" id="area_to" min="0" step="1" value="<?php echo isset($_GET['area_to']) ? htmlspecialchars($_GET['area_to']) : '80'; ?>">
+      <br />
+      <label for="pages">Seiten:</label>
+      <input type="number" name="pages" id="pages" min="1" step="1" value="<?php echo isset($_GET['pages']) ? htmlspecialchars($_GET['pages']) : '5'; ?>">
+      <!--<br />
+      <label for="rows">Zeilen pro Seite:</label>
+      <input type="number" name="rows" id="rows" min="1" step="1" value="200">-->
+      <br />
+      <label for="sort">Sortierung:</label>
+      <select name="sort" id="sort">
+        <option value="0" <?php if(isset($_GET['sort']) && $_GET['sort'] == "0") echo "selected"; ?>>Aktualität</option>
+        <!--<option value="1" <?php if(isset($_GET['sort']) && $_GET['sort'] == "1") echo "selected"; ?>>Nähe</option>-->
+        <option value="2" <?php if(isset($_GET['sort']) && $_GET['sort'] == "2") echo "selected"; ?>>Miete aufsteigend</option>
+        <option value="3" <?php if(isset($_GET['sort']) && $_GET['sort'] == "3") echo "selected"; ?>>Miete absteigend</option>
+        <option value="4" <?php if(isset($_GET['sort']) && $_GET['sort'] == "4") echo "selected"; ?>>Fläche aufsteigend</option>
+        <option value="5" <?php if(isset($_GET['sort']) && $_GET['sort'] == "5") echo "selected"; ?>>Fläche absteigend</option>
+        <option value="6" <?php if(isset($_GET['sort']) && $_GET['sort'] == "6") echo "selected"; ?>>Relevanz</option>
+      </select>
+      <br />
+      <input type="submit" value="Filtern">
       </form>
     </div>
   </div>
